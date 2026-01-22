@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: useLogback
+
+application:
+  code: useLB
+
+server:
+  port: 6611
+
+management:
+  tracing:
+    sampling:
+      probability: 1
+
+#logging:
+#  file:
+#    path: var/log/application

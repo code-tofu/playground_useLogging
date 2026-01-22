@@ -1,5 +1,10 @@
 <configuration scan="true" scanPeriod="5 seconds">
     <property name="LOG_DIR" value="var/log/application" />
+    <springProperty name="app_name" source="spring.application.name"/>
+    <springProperty name="env" source="spring.profiles.active"/>
+    <springProperty name="app_port" source="server.port"/>
+    <springProperty name="appcode" source="application.code"/>
+    <springProperty name="version" source="application.version"/>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>${LOG_DIR}/logfile.log</file>
@@ -7,21 +12,21 @@
         <encoder>
             <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
+<!--        <encoder class="ch.qos.logback.classic.encoder.JsonEncoder"/>-->
         <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
             <evaluator>
                 <expression>message.contains("PII")</expression>
 <!--                <expression>formattedMessage.contains("PII")</expression>-->
             </evaluator>
-            <OnMismatch>NETURAL</OnMismatch>
+            <OnMismatch>NEUTRAL</OnMismatch>
             <OnMatch>DENY</OnMatch>
         </filter>
     </appender>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%boldRed(%d{HH:mm:ss.SSS}) %green([%thread]) %highlight(%-5level) %cyan(%logger{36}) - %msg%n</pattern>
+            <pattern> ${app_name} | ${env} | ${app_port} | ${appcode} | ${version} | %boldRed(%d{HH:mm:ss.SSS}) %green([%thread]) %highlight(%-5level) ${PID} %cyan(%logger{36}) - %msg%n </pattern>
         </encoder>
-
     </appender>
 
     <logger name="code.tofu.useLogback.service.debugLogger" level="DEBUG" />
