@@ -4,6 +4,7 @@ import code.tofu.useLogback.service.NormalLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.slf4j.MDC;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +37,7 @@ public class LogbackController {
 
     @GetMapping("/log-level")
     public String logError() {
+        log.info("traceId from MDC = {}", MDC.get("traceId"));
         normalLogService.logLevelTest();
         return new String("Completed");
     }

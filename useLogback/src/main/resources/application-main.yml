@@ -8,11 +8,28 @@ application:
 server:
   port: 6611
 
+
+
+logging:
+  level:
+    io.micrometer.tracing: DEBUG
+    io.opentelemetry: DEBUG
+    io.micrometer.tracing.context: DEBUG
+
 management:
+  observations:
+    http:
+      server:
+        enabled: true
   tracing:
+    enabled: true
     sampling:
       probability: 1
 
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
 #logging:
 #  file:
 #    path: var/log/application

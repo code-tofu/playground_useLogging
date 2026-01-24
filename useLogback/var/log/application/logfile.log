@@ -1,0 +1,3 @@
+12546 [http-nio-6611-exec-1] INFO  c.t.useLogback.service.fileLogger - file logger info
+12558 [http-nio-6611-exec-1] WARN  c.t.useLogback.service.fileLogger - file logger warn
+12558 [http-nio-6611-exec-1] INFO  c.t.useLogback.service.fileLogger - PII - do not log me into file
