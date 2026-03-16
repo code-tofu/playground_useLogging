@@ -9,7 +9,6 @@ server:
   port: 6611
 
 
-
 logging:
   level:
     io.micrometer.tracing: DEBUG

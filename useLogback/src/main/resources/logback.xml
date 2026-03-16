@@ -6,11 +6,11 @@
     <springProperty name="appcode" source="application.code"/>
     <springProperty name="version" source="application.version"/>
 
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>${LOG_DIR}/logfile.log</file>
+    <appender name="FILE1" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_DIR}/logfileid.log</file>
         <append>false</append>
         <encoder>
-            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %replace(%msg){'\[X-(?:S-)?AUTH-TOKEN=[^\]]+\]','[MASKED-TOKEN]'}%n</pattern>
         </encoder>
 <!--        <encoder class="ch.qos.logback.classic.encoder.JsonEncoder"/>-->
         <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
@@ -23,6 +23,15 @@
         </filter>
     </appender>
 
+
+    <appender name="FILE2" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_DIR}/logfile.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern> ${app_name} | ${env} | ${app_port} | ${appcode} | ${version} | %boldRed(%d{HH:mm:ss.SSS}) %green([%thread]) %highlight(%-5level) ${PID} %X{traceId},%X{spanId} %cyan(%logger{36}) - %msg%n </pattern>
@@ -32,8 +41,12 @@
     <logger name="code.tofu.useLogback.service.debugLogger" level="DEBUG" />
     <logger name="code.tofu.useLogback.service.warnLogger" level="WARN" />
     <logger name="code.tofu.useLogback.service.fileLogger" level="INFO">
-        <appender-ref ref="FILE" />
+        <appender-ref ref="FILE2" />
     </logger>
+    <logger name="code.tofu.useLogback.controller.RestAuthenticationMaskingFilter" level="DEBUG" additivity="false">
+        <appender-ref ref="FILE1" />
+    </logger>
+
     <root level="info">
         <appender-ref ref="STDOUT" />
 <!--        <appender-ref ref="FILE" />-->

@@ -23,6 +23,14 @@ public class LogbackController {
         return new String(param);
     }
 
+    @GetMapping("/log-masking")
+    public String logMasking() {
+        log.info("Controller Info");
+        log.debug("Controller Debug");
+        normalLogService.logToFile();
+        return new String("Completed");
+    }
+
     @GetMapping("/log-warn")
     public String logWarn(@RequestParam String param) {
         log.warn(param);

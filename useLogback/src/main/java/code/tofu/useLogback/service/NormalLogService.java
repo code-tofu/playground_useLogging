@@ -2,7 +2,6 @@ package code.tofu.useLogback.service;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
-import lombok.extern.slf4j.Slf4j;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 import org.slf4j.LoggerFactory;
@@ -22,8 +21,17 @@ public class NormalLogService {
         logger.setLevel(level);
     }
 
-    public void log(String message){
+    public void loginfo(String message){
         logger.info(message);
+    }
+
+    public void logdebug(String message){
+        logger.debug(message);
+    }
+
+    public void logToFile(){
+        filelogger.info("File Logger Normal Log Service Info Level");
+        filelogger.debug("File Logger Normal Log Service Debug Level");
     }
 
     public void logLevelTest(){
